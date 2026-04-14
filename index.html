@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Logos — λόγος</title>
+<meta name="description" content="Felsefe, fizik, yapay zeka ve yazılım üzerine iki dilli entelektüel platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0f0e0c;
+  --ink2:#3a3831;
+  --ink3:#7a7669;
+  --paper:#f5f2eb;
+  --paper2:#ece8df;
+  --gold:#b8963e;
+  --gold2:#d4b05a;
+  --red:#8b2020;
+  --line:rgba(15,14,12,0.12);
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Spectral',Georgia,serif;min-height:100vh;overflow-x:hidden}
+
+/* GRAIN OVERLAY */
+.grain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;opacity:0.025;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(245,242,235,0.94);backdrop-filter:blur(10px);z-index:100}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;cursor:pointer}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color 0.2s;cursor:pointer}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-lang{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--ink3);border:1px solid var(--line);padding:5px 12px;cursor:pointer;background:none;transition:all 0.2s}
+.nav-lang:hover{border-color:var(--gold);color:var(--gold)}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;border-bottom:1px solid var(--line)}
+.hero-left{padding:5rem 3rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line)}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,5.5vw,5.5rem);line-height:1.05;font-weight:400;margin-bottom:1.5rem}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:1.1rem;font-weight:300;line-height:1.8;color:var(--ink2);max-width:42ch;margin-bottom:3rem}
+.hero-cta{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.btn-primary{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:13px 30px;border:none;cursor:pointer;transition:background 0.2s}
+.btn-primary:hover{background:var(--gold)}
+.btn-ghost{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;background:none;color:var(--ink3);padding:13px 0;border:none;cursor:pointer;border-bottom:1px solid var(--line);transition:color 0.2s,border-color 0.2s}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold)}
+.hero-right{padding:5rem 3rem;display:flex;flex-direction:column;justify-content:space-between;background:var(--paper2)}
+.hero-quote{flex:1;display:flex;flex-direction:column;justify-content:center}
+.quote-mark{font-family:'Playfair Display',serif;font-size:5rem;line-height:0.5;color:var(--gold2);margin-bottom:1.5rem}
+.quote-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;line-height:1.6;color:var(--ink);margin-bottom:1.5rem}
+.quote-attr{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3)}
+.hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--line)}
+.stat-item{display:flex;flex-direction:column;gap:4px}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--ink)}
+.stat-l{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3)}
+
+/* TOPICS BAR */
+.topics-bar{display:flex;padding:1.25rem 3rem;gap:0.75rem;border-bottom:1px solid var(--line);flex-wrap:wrap;align-items:center}
+.topics-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-right:0.5rem}
+.topic-pill{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--line);cursor:pointer;transition:all 0.2s;background:none;color:var(--ink2)}
+.topic-pill:hover,.topic-pill.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* SECTION HEADERS */
+.section-header{display:flex;justify-content:space-between;align-items:baseline;padding:2.5rem 3rem 2rem;border-bottom:1px solid var(--line)}
+.section-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:400}
+.section-more{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);cursor:pointer;text-decoration:none}
+.section-more:hover{color:var(--ink)}
+
+/* ARTICLES */
+.articles-grid{display:grid;grid-template-columns:2fr 1fr 1fr;border-bottom:1px solid var(--line)}
+.article-card{padding:2.5rem 3rem;border-right:1px solid var(--line);cursor:pointer;transition:background 0.2s}
+.article-card:last-child{border-right:none}
+.article-card:hover{background:var(--paper2)}
+.article-card.featured{background:var(--ink);color:var(--paper)}
+.article-card.featured .article-tag{color:var(--gold2)}
+.article-card.featured .article-title{color:var(--paper)}
+.article-card.featured .article-excerpt{color:rgba(245,242,235,0.7)}
+.article-card.featured .article-meta{color:rgba(245,242,235,0.45)}
+.article-tag{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.article-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;line-height:1.3;margin-bottom:1rem}
+.article-excerpt{font-size:0.9rem;font-weight:300;line-height:1.75;color:var(--ink2);margin-bottom:1.5rem}
+.article-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;color:var(--ink3);display:flex;gap:1rem}
+.article-card:not(.featured) .article-title{font-size:1.15rem}
+
+/* MANIFESTO */
+.manifesto-band{background:var(--ink);color:var(--paper);padding:5rem 3rem;display:grid;grid-template-columns:1fr 2.5fr;gap:4rem;border-bottom:1px solid var(--line)}
+.manifesto-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold2);padding-top:0.5rem}
+.manifesto-text{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:400;font-style:italic;line-height:1.65;color:var(--paper)}
+.manifesto-text strong{font-style:normal;color:var(--gold2)}
+
+/* FRAGMENTS */
+.fragments-section{padding:0 3rem 3rem}
+.fragments-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+.fragment{padding:2rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;transition:background 0.2s}
+.fragment:nth-child(3n){border-right:none}
+.fragment:nth-child(n+7){border-bottom:none}
+.fragment:hover{background:var(--paper2)}
+.fragment-type{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:0.75rem}
+.fragment-text{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;line-height:1.65;color:var(--ink)}
+.fragment-source{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;color:var(--gold);margin-top:0.75rem}
+
+/* TWEETS */
+.tweets-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tweet-card{padding:1.75rem 2rem;border-right:1px solid var(--line);cursor:pointer;transition:background 0.2s}
+.tweet-card:last-child{border-right:none}
+.tweet-card:hover{background:var(--paper2)}
+.tweet-icon{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:var(--ink3);margin-bottom:0.75rem;text-transform:uppercase}
+.tweet-text{font-size:0.88rem;line-height:1.7;color:var(--ink);font-weight:300}
+
+/* FOOTER */
+footer{padding:3.5rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid var(--line)}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.2rem;letter-spacing:0.1em;display:block;margin-bottom:1rem}
+.footer-desc{font-size:0.85rem;font-weight:300;color:var(--ink3);line-height:1.8;max-width:30ch}
+.footer-col-title{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem}
+.footer-links{display:flex;flex-direction:column;gap:0.6rem;list-style:none}
+.footer-links a{font-size:0.85rem;font-weight:300;color:var(--ink2);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{padding:1.5rem 3rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;color:var(--ink3)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1.25rem 1.5rem}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:3rem 1.5rem;border-right:none;border-bottom:1px solid var(--line)}
+  .hero-right{padding:2.5rem 1.5rem}
+  .articles-grid{grid-template-columns:1fr}
+  .article-card{border-right:none;border-bottom:1px solid var(--line)}
+  .fragments-grid{grid-template-columns:1fr}
+  .fragment{border-right:none}
+  .fragment:nth-child(n){border-bottom:1px solid var(--line)}
+  .tweets-row{grid-template-columns:1fr 1fr}
+  .tweet-card:nth-child(2n){border-right:none}
+  .manifesto-band{grid-template-columns:1fr;gap:1.5rem;padding:3rem 1.5rem}
+  footer{grid-template-columns:1fr 1fr;padding:2.5rem 1.5rem;gap:2rem}
+  .section-header,.topics-bar{padding-left:1.5rem;padding-right:1.5rem}
+  .fragments-section{padding:0 1.5rem 2.5rem}
+  .footer-bottom{padding:1.25rem 1.5rem;flex-direction:column;gap:0.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo">The Logos</a>
+  <ul class="nav-links">
+    <li><a href="#makaleler">Makaleler</a></li>
+    <li><a href="#fragmanlar">Fragmanlar</a></li>
+    <li><a href="#dusunceler">Düşünceler</a></li>
+    <li><a href="#manifesto">Manifesto</a></li>
+    <li><a href="#hakkinda">Hakkında</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-lang" onclick="toggleLang(this)">TR / EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Logos — λόγος — Akıl, Söz, Evren</p>
+    <h1 class="hero-title">Düşünmek<br>bir <em>eylemdir.</em></h1>
+    <p class="hero-sub">Felsefe, fizik, yapay zeka ve yazılım üzerine — antik sorulardan kuantum belirsizliklerine, Turing'den varoluşa uzanan bir entelektüel seyahat.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="scrollTo('makaleler')">Okumaya Başla</button>
+      <button class="btn-ghost" onclick="scrollTo('manifesto')">Manifesto →</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-quote">
+      <div class="quote-mark">"</div>
+      <p class="quote-text">The universe is not only queerer than we suppose, but queerer than we can suppose.</p>
+      <p class="quote-attr">— J.B.S. Haldane, 1927</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-n">∞</span><span class="stat-l">Soru</span></div>
+      <div class="stat-item"><span class="stat-n">λ</span><span class="stat-l">Logos</span></div>
+      <div class="stat-item"><span class="stat-n">2</span><span class="stat-l">Dil</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<div class="topics-bar">
+  <span class="topics-label">Konular</span>
+  <button class="topic-pill active" onclick="filterTopic(this,'all')">Tümü</button>
+  <button class="topic-pill" onclick="filterTopic(this,'felsefe')">Felsefe</button>
+  <button class="topic-pill" onclick="filterTopic(this,'fizik')">Fizik</button>
+  <button class="topic-pill" onclick="filterTopic(this,'ai')">Yapay Zeka</button>
+  <button class="topic-pill" onclick="filterTopic(this,'yazilim')">Yazılım</button>
+  <button class="topic-pill" onclick="filterTopic(this,'matematik')">Matematik</button>
+  <button class="topic-pill" onclick="filterTopic(this,'bilincç')">Bilinç</button>
+  <button class="topic-pill" onclick="filterTopic(this,'kozmoloji')">Kozmoloji</button>
+  <button class="topic-pill" onclick="filterTopic(this,'etik')">Etik</button>
+  <button class="topic-pill" onclick="filterTopic(this,'dil')">Dil & Anlam</button>
+</div>
+
+<!-- ARTICLES -->
+<div class="section-header" id="makaleler">
+  <h2 class="section-title">Son Makaleler</h2>
+  <a class="section-more">Tümünü gör →</a>
+</div>
+
+<div class="articles-grid">
+  <div class="article-card featured">
+    <p class="article-tag">Yapay Zeka × Felsefe</p>
+    <h3 class="article-title">Büyük Dil Modelleri Düşünüyor mu? Searle'ün Odası Hâlâ Açık</h3>
+    <p class="article-excerpt">John Searle'ün 1980'de kurduğu düşünce deneyi, bugün ChatGPT ve Claude'un varlığıyla yepyeni bir gerilim kazandı. Sembol manipülasyonu ile anlam arasındaki uçurum gerçekten kapanıyor mu? Yoksa biz sadece çok daha karmaşık bir odanın içinde mi oturuyoruz?</p>
+    <div class="article-meta"><span>12 Nisan 2025</span><span>8 dk okuma</span><span>TR</span></div>
+  </div>
+  <div class="article-card">
+    <p class="article-tag">Fizik</p>
+    <h3 class="article-title">Zamanın Oku: Entropi Neden Geri Gitmiyor?</h3>
+    <p class="article-excerpt">Termodinamiğin ikinci yasası evreni tek yönlü bir nehre mahkum eder. Ama Newton'ın denklemleri geri döndürülebilir. Bu paradoks nasıl çözülür?</p>
+    <div class="article-meta"><span>5 Nisan 2025</span><span>6 dk</span><span>TR/EN</span></div>
+  </div>
+  <div class="article-card">
+    <p class="article-tag">Felsefe × Yazılım</p>
+    <h3 class="article-title">Heraclitus Was Right: You Cannot Step Into the Same Codebase Twice</h3>
+    <p class="article-excerpt">The ancient doctrine of flux finds its most vivid expression in modern software — where systems mutate, dependencies drift, and nothing stays still.</p>
+    <div class="article-meta"><span>1 Nisan 2025</span><span>5 dk</span><span>EN</span></div>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<div class="manifesto-band" id="manifesto">
+  <p class="manifesto-label">Manifesto</p>
+  <p class="manifesto-text">The Logos, <strong>geçmişin sorularını</strong> geleceğin araçlarıyla yeniden kurar. Sokrates'in diyaloglarından kuantum mekaniğine, Leibniz'in monadlarından sinir ağlarına — <strong>düşüncenin sürekliliğine</strong> inanıyoruz. Bilim bir yöntem, felsefe bir tutum, teknoloji bir ayna: üçü birlikte <strong>şimdiyi görünür kılar.</strong></p>
+</div>
+
+<!-- FRAGMENTS -->
+<div class="section-header" id="fragmanlar">
+  <h2 class="section-title">Fragmanlar</h2>
+  <a class="section-more">Tümünü gör →</a>
+</div>
+
+<div class="fragments-section">
+  <div class="fragments-grid">
+    <div class="fragment">
+      <p class="fragment-type">Kısa Yazı · Matematik</p>
+      <p class="fragment-text">"Gödel bize matematikten kaçış olmadığını söyledi. Turing bize hesaplamadan kaçış olmadığını. Her ikisi de sınırlardan değil, sınırların içindeki özgürlükten bahsediyordu aslında."</p>
+      <p class="fragment-source">Tamamlanmazlık & Hesaplama</p>
+    </div>
+    <div class="fragment">
+      <p class="fragment-type">Short Essay · Consciousness</p>
+      <p class="fragment-text">"Consciousness might be what information feels like from the inside — not a ghost in the machine, but the machine noticing its own hum."</p>
+      <p class="fragment-source">On IIT & Panpsychism</p>
+    </div>
+    <div class="fragment">
+      <p class="fragment-type">Kısa Yazı · Kozmoloji</p>
+      <p class="fragment-text">"Fizik yasaları evrensel; ama onları anlayan bilinç yerel ve gelip geçici. Bu asimetrinin ağırlığını taşımak zorundayız."</p>
+      <p class="fragment-source">Antropik İlke Üzerine</p>
+    </div>
+    <div class="fragment">
+      <p class="fragment-type">Short Essay · Language</p>
+      <p class="fragment-text">"Every word we use to describe reality is a compressed theory about it. Language isn't a neutral tool — it's an epistemology in disguise."</p>
+      <p class="fragment-source">Wittgenstein & Linguistic Relativity</p>
+    </div>
+    <div class="fragment">
+      <p class="fragment-type">Kısa Yazı · Etik</p>
+      <p class="fragment-text">"Bir yapay zekaya 'iyi' olmayı öğretmeye çalışmak, önce insanın 'iyi'yi ne kastettiğini bilmesini gerektirir. Bu, felsefenin hiç bitmeyeceğinin kanıtıdır."</p>
+      <p class="fragment-source">Makine Etiği & Değer Hizalaması</p>
+    </div>
+    <div class="fragment">
+      <p class="fragment-type">Short Essay · Physics</p>
+      <p class="fragment-text">"Dark matter doesn't interact with light. We only know it exists because it bends space. Perhaps the most important things in any system are the ones that leave only gravitational traces."</p>
+      <p class="fragment-source">On Absence & Inference</p>
+    </div>
+  </div>
+</div>
+
+<!-- TWEETS / THOUGHTS -->
+<div class="section-header" id="dusunceler">
+  <h2 class="section-title">Anlık Düşünceler</h2>
+  <a class="section-more">Tümünü gör →</a>
+</div>
+
+<div class="tweets-row">
+  <div class="tweet-card">
+    <p class="tweet-icon">Düşünce · Felsefe</p>
+    <p class="tweet-text">Wittgenstein haklıydı: dil oyunları değişirse ontoloji de değişir. LLM'ler yeni bir dil oyunu değil — tüm oyunların bir simülasyonu. Bu fark küçük değil.</p>
+  </div>
+  <div class="tweet-card">
+    <p class="tweet-icon">Thought · Physics</p>
+    <p class="tweet-text">The many-worlds interpretation doesn't feel strange anymore. What feels strange is that we ever thought the universe would choose just one branch for us.</p>
+  </div>
+  <div class="tweet-card">
+    <p class="tweet-icon">Düşünce · Yazılım</p>
+    <p class="tweet-text">Yazılım sadece mantık değil — gömülü varsayımlar, yorgun gecelerin izleri ve unutulmuş niyetlerin arkeolojisi. Her satır biraz da felsefedir.</p>
+  </div>
+  <div class="tweet-card">
+    <p class="tweet-icon">Thought · AI</p>
+    <p class="tweet-text">We are building systems that predict the next token. We call it intelligence. Maybe intelligence was always just that — very good prediction wearing a costume.</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section-header" id="hakkinda">
+  <h2 class="section-title">Hakkında</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)">
+  <div style="padding:3rem;border-right:1px solid var(--line)">
+    <p style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem">TR</p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;line-height:1.8;color:var(--ink);margin-bottom:1.5rem">The Logos, felsefe, fizik, yapay zeka ve yazılım üzerine düşünen biri tarafından yazılmaktadır. Akademik bir kurum değil — düşüncenin peşinden giden bir bireysel platform.</p>
+    <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--ink2)">Antik Yunan'da logos; akıl, söz ve evrensel düzeni aynı anda ifade ediyordu. Bu platform da tam olarak bu kesişimde yaşıyor: aklı söze, sözü düzene dönüştürme çabası.</p>
+  </div>
+  <div style="padding:3rem;background:var(--paper2)">
+    <p style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem">EN</p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;line-height:1.8;color:var(--ink);margin-bottom:1.5rem">The Logos is written by someone who thinks about philosophy, physics, artificial intelligence, and software. Not an institution — a singular intellectual pursuit.</p>
+    <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--ink2)">In ancient Greek, logos meant reason, word, and universal order simultaneously. This platform lives precisely at that intersection: the effort to turn reason into words, and words into order.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <span class="footer-logo">The Logos</span>
+    <p class="footer-desc">Felsefe, bilim ve teknoloji üzerine iki dilli entelektüel bir platform. Geçmişi ve geleceği harmanlayarak şimdiyi düşünmek.</p>
+  </div>
+  <div>
+    <p class="footer-col-title">Bölümler</p>
+    <ul class="footer-links">
+      <li><a href="#makaleler">Makaleler</a></li>
+      <li><a href="#fragmanlar">Fragmanlar</a></li>
+      <li><a href="#dusunceler">Düşünceler</a></li>
+      <li><a href="#manifesto">Manifesto</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Konular</p>
+    <ul class="footer-links">
+      <li><a href="#">Felsefe</a></li>
+      <li><a href="#">Fizik</a></li>
+      <li><a href="#">Yapay Zeka</a></li>
+      <li><a href="#">Yazılım</a></li>
+      <li><a href="#">Matematik</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="footer-col-title">Bağlantı</p>
+    <ul class="footer-links">
+      <li><a href="https://x.com/TheLogos" target="_blank">X / The Logos</a></li>
+      <li><a href="#">RSS</a></li>
+      <li><a href="#">Hakkında</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2025 The Logos — λόγος</span>
+  <span class="footer-copy">Düşünmek bir eylemdir.</span>
+</div>
+
+<script>
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+function filterTopic(btn,topic){
+  document.querySelectorAll('.topic-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function toggleLang(btn){
+  btn.textContent = btn.textContent.trim()==='TR / EN' ? 'EN / TR' : 'TR / EN';
+}
+</script>
+</body>
+</html>
